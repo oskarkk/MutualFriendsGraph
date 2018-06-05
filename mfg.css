@@ -57,9 +57,14 @@
 	text-align: left;
 }
 
+
 #mfgTest textarea {
     display: block;
     width: 50px;
+    resize: none;
+    height: 1.5em;
+    text-align: center;
+    margin: 0 auto;
 }
 
 

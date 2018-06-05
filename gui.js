@@ -18,7 +18,7 @@ $('#mfgStart .mfgButton.test').click(function(){
 
 // start button on the test page
 $('#mfgTest .mfgButton.start').click(function(){
-	stopAfter = $('#mfgTest textarea').html();
+	var stopAfter = parseInt($('#mfgTest textarea').val(),10);
 	if(stopAfter > 0) {
 		GM_setValue('_friendsCount',stopAfter);
 		GM_setValue('_isTest',1);
@@ -34,10 +34,10 @@ $('.mfgButton.close').click(function(){
 });
 
 // make GUI almost transparent when out of focus
-$(fbBody).mouseenter(function(){
+$('body > ._li').mouseenter(function(){
 	$('#mfgPanel').css('opacity', '0.3');
 });
-$(fbBody).mouseleave(function(){
+$('body > ._li').mouseleave(function(){
 	$('#mfgPanel').css('opacity', '1');
 });
 
@@ -59,7 +59,7 @@ $('.mfgButton.abort').click(function(){
 });
 
 function progressBar(position,string,fraction) {
-	percent = (fraction*100).toFixed(3)+'%';
+	var percent = (fraction*100).toFixed()+'%';
 	if(string!=0) {
 		$('.mfgProgress.' + position + ' p.left').text(string);
 	}
