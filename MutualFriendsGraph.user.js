@@ -1,18 +1,19 @@
 // ==UserScript==
-// @name       MutualFriendsGraph
-// @namespace  https://oskark.pl/
-// @version    1.7.0
-// @updateURL  https://gist.github.com/oskarkk/55eb8abedfa7bb0e6d4280727d1f1371/raw/MutualFriendsGraph.user.js
-// @resource   css mfg.css
-// @resource   panel panel.html
-// @resource   gui gui.js
-// @run-at     document-end
-// @require    https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
+// @name         MutualFriendsGraph
+// @namespace    https://oskark.pl/
+// @version      1.7.1
+// @updateURL    https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
+// @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
+// @resource     css mfg.css
+// @resource     panel panel.html
+// @resource     gui gui.js
+// @run-at       document-end
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @noframes
-// @include    *://*.facebook.com/*
-// @grant      GM_getValue
-// @grant      GM_setValue
-// @grant      GM_getResourceText
+// @include      *://*.facebook.com/*
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_getResourceText
 // ==/UserScript==
 
 eval(GM_getResourceText('gui'));
