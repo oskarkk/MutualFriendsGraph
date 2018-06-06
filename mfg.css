@@ -23,6 +23,10 @@
 	opacity: 1;
 }
 
+#mfgPanel p {
+	margin: 0;
+}
+
 #mfgHeader {
 	font-size: 40px;
 	text-align: center;
@@ -168,7 +172,7 @@
     display: block;
     position: absolute;
     bottom: 10px;
-    top: 150px;
+    top: 170px;
 	left: 0;
     width: 100%;
     box-sizing: border-box;
