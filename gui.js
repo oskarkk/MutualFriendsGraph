@@ -28,6 +28,9 @@ $('#mfgTest .mfgButton.start').click(function(){
 	}
 });
 
+// show last results
+$('#mfgStart .mfgButton.show').click(showResults);
+
 // hide the menu
 $('.mfgButton.close').click(function(){
 	$('#mfgPanelWrapper').css('display', 'none');

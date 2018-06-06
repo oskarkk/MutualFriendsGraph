@@ -55,6 +55,7 @@
 	float: left;
     font-size: 12px;
 	text-align: left;
+	white-space: pre-wrap;
 }
 
 
