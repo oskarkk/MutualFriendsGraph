@@ -15,20 +15,27 @@ $('#mfgStart .mfgButton.test').click(function(){
 	mfgShow('#mfgTest');
 });
 
+// return button
+$('.mfgLink.return').click(function(){
+	mfgShow('#mfgStart');
+});
+
 // start button on the test page
 $('#mfgTest .mfgButton.start').click(function(){
-	var stopAfter = parseInt($('#mfgTest textarea').val(),10);
-	if(stopAfter > 0) {
-		GM_setValue('_friendsCount',stopAfter);
-		GM_setValue('_isTest',1);
-		startCrawler();
+	var toTest = parseInt($('#mfgTest textarea').val(),10);
+	if(toTest > 0) {
+		startCrawler(toTest);
 	} else {
 		alert('You must enter value larger than 0');
 	}
 });
 
 // show last results
-$('#mfgStart .mfgButton.show').click(showResults);
+if(GM_getValue('_friendsCount',0) > 0) {
+	$('#mfgStart .mfgButton.show').click(showResults);
+} else {
+	$('#mfgStart .mfgButton.show').css('background','#7a7a7a');
+}
 
 // hide the menu
 $('.mfgLink.close').click(function(){

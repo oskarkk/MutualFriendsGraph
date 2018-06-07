@@ -6,7 +6,7 @@
 	position: fixed;
 	right: 0;
 	left: 50%;
-	top: 0;
+	top: 42px;
 	bottom: 0;
 	z-index: 9000;
 	transition: opacity 0.3s;
@@ -52,7 +52,7 @@
 #mfgBody p {
     font-size: 13px;
 	text-align: center;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 #mfgBody p.stats {
@@ -85,7 +85,7 @@
 
 .mfgButton {
     width: 200px;
-	margin: 25px auto;
+	margin: 15px auto;
 	padding: 10px;
 	font-size: 15px;
 	font-weight: bold;
@@ -100,7 +100,7 @@
 
 .mfgLinkWrapper {
 	text-align: center;
-	margin-bottom: 20px;
+	margin: 10px 0 20px;
 }
 
 .mfgLinkWrapper * {

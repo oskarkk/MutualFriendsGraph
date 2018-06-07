@@ -33,7 +33,7 @@ if(GM_getValue('_crawlerRunning') == 1) {
 	mfgShow('#mfgStart');
 }
 
-function startCrawler() {
+function startCrawler(toTest) {
 	// error when user tries to start the crawler on wrong page
 	if($(fbYourFriendsBox).length == 0){
 		alert('Go to your friends list and reload.');
@@ -60,6 +60,7 @@ function startCrawler() {
 			progressBar('bottom','Processing...',0);
 			// when the page is fully loaded, save every friend on the page
 			getYourFriends();
+			if(toTest > 0) GM_setValue('_friendsCount',toTest);
 			GM_setValue('_currentFriend',0);
 			goToFriend(0); // leave current page and go to the 1st friend
 		}
@@ -81,8 +82,7 @@ function getYourFriends() {
 			$(friendsList[i]).find('.fsl.fwb.fcb a').text()
 		);
 	}
-	if(GM_getValue('_isTest') == 0) GM_setValue('_friendsCount',friendsCount);
-	
+	GM_setValue('_friendsCount',friendsCount);
 	progressBar('top',0,1/(friendsCount+2));
 	progressBar('bottom','Loading the next page...',1);
 }
