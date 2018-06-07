@@ -2,7 +2,7 @@
 // General
 */
 
-#mfgPanelWrapper {
+#mfgWrapper {
 	position: fixed;
 	right: 0;
 	left: 50%;
@@ -78,29 +78,12 @@
 // Buttons/links
 */
 
-.mfgButton {
+.mfgButton,
+.mfgLink {
 	cursor: pointer;
 }
 
-.mfgButton.blue {
-	background: #4267b2;
-	color: white;
-	border-radius: 3px;
-}
-
-.mfgButtonWrapper {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.mfgButtonWrapper * {
-	display: inline-block;
-	padding: 0 15px;
-    font-size: 15px;
-}
-
-.mfgButton.start,
-.mfgButton.test {
+.mfgButton {
     width: 200px;
 	margin: 25px auto;
 	padding: 10px;
@@ -109,14 +92,31 @@
     text-align: center;
 }
 
-.mfgButton.copy {
+.blue {
+	background: #4267b2;
+	color: white;
+	border-radius: 3px;
+}
+
+.mfgLinkWrapper {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.mfgLinkWrapper * {
+	display: inline-block;
+	padding: 0 15px;
+    font-size: 15px;
+}
+
+.mfgLink.copy {
 	font-size: 15px;
     display: inline-block;
     text-align: center;
 	float: right;
 }
 
-.mfgButton.copy div {
+.mfgLink.copy div {
     font-size: 75px;
     line-height: 75px;
 }

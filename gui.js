@@ -12,8 +12,7 @@ $('#mfgStart .mfgButton.start').click(function(){
 
 // test button
 $('#mfgStart .mfgButton.test').click(function(){
-	$('#mfgStart').css('display', 'none');
-	$('#mfgTest').css('display', 'block');
+	mfgShow('#mfgTest');
 });
 
 // start button on the test page
@@ -32,8 +31,8 @@ $('#mfgTest .mfgButton.start').click(function(){
 $('#mfgStart .mfgButton.show').click(showResults);
 
 // hide the menu
-$('.mfgButton.close').click(function(){
-	$('#mfgPanelWrapper').css('display', 'none');
+$('.mfgLink.close').click(function(){
+	$('#mfgWrapper').css('display', 'none');
 });
 
 // make GUI almost transparent when out of focus
@@ -50,13 +49,13 @@ $('#mfgPanel textarea').focus(function(){
 });
 
 // copy output to clipboard
-$('.mfgButton.copy').click(function(){
+$('.mfgLink.copy').click(function(){
 	$('#mfgPanel textarea').select();
 	document.execCommand('copy');
 });
 
 // abort crawling
-$('.mfgButton.abort').click(function(){
+$('.mfgLink.abort').click(function(){
 	GM_setValue('mfgCrawlerRunning',0);
 	location.reload();
 });

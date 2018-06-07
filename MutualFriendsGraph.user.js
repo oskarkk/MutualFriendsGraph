@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MutualFriendsGraph
 // @namespace    https://oskark.pl/
-// @version      1.7.2
+// @version      1.7.3
 // @updateURL    https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @resource     css mfg.css
@@ -30,7 +30,7 @@ if(GM_getValue('_crawlerRunning') == 1) {
 	// page should be the list of mutual friends, continue crawling
 	crawlFriend();
 } else {
-	$('#mfgStart').css('display', 'block');	// show menu
+	mfgShow('#mfgStart');
 }
 
 function startCrawler() {
@@ -105,7 +105,7 @@ function crawlFriend() {
 					'/'+friendsCount+' data ...',
 				(currentFriend+1)/(friendsCount+2));
 	
-	$('#mfgProcessing').css('display', 'block'); // show processing window
+	mfgShow('#mfgProcessing');
 	
 	// loop till the end of list
 	var loop = setInterval(function(){
@@ -168,8 +168,7 @@ function showResults() {
 	$('#mfgResults p.stats').append(`Friends count: ${friendsCount}\n`+
 									`Number of graph edges: ${edgesNumber}\n`+
 									`Duration: ${duration} seconds\n`);
-	$('#mfgBody > div').css('display', 'none');
-	$('#mfgResults').css('display', 'block');
+	mfgShow('#mfgResults');
 }
 
 function checkUniqueness(currentName,n) {
@@ -183,4 +182,9 @@ function checkUniqueness(currentName,n) {
 
 function addZeroes(x) {
 	return x.toString().padStart(4,'0');
+}
+
+function mfgShow(str) {
+	$('#mfgBody > div').css('display', 'none');
+	$(str).css('display', 'block');
 }
