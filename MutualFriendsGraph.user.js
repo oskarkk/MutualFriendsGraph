@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MutualFriendsGraph
 // @namespace    https://oskark.pl/
-// @version      1.7.4
+// @version      1.7.5
 // @updateURL    https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @resource     css mfg.css
@@ -150,6 +150,7 @@ function getMutualFriends(currentFriend) {
 }
 
 function showResults() {
+	$('#mfgResults textarea').html('');
 	var edgesNumber = 0;
 	var friendsCount = GM_getValue('_friendsCount');
 	var duration = GM_getValue('_duration');
@@ -165,7 +166,7 @@ function showResults() {
 			}
 		}
 	}
-	$('#mfgResults p.stats').append(`Friends count: ${friendsCount}\n`+
+	$('#mfgResults p.stats').html(  `Friends count: ${friendsCount}\n`+
 									`Number of graph edges: ${edgesNumber}\n`+
 									`Duration: ${duration} seconds\n`);
 	mfgShow('#mfgResults');

@@ -49,19 +49,11 @@
 	display: none;
 }
 
-#mfgBody p {
+#mfgBody > p {
     font-size: 13px;
 	text-align: center;
 	margin-bottom: 30px;
 }
-
-#mfgBody p.stats {
-	float: left;
-    font-size: 12px;
-	text-align: left;
-	white-space: pre-wrap;
-}
-
 
 #mfgTest textarea {
     display: block;
@@ -100,7 +92,7 @@
 
 .mfgLinkWrapper {
 	text-align: center;
-	margin: 10px 0 20px;
+	margin: 20px 0;
 }
 
 .mfgLinkWrapper * {
@@ -176,4 +168,11 @@
 	left: 0;
     width: 100%;
     box-sizing: border-box;
+}
+
+#mfgResults p.stats {
+	float: left;
+    font-size: 12px;
+	text-align: left;
+	white-space: pre-wrap;
 }
