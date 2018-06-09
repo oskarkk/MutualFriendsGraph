@@ -154,7 +154,7 @@
 	padding: 0 20px;
 }
 
-#mfgResults .mfgButtonWrapper {
+#mfgResults .mfgLinkWrapper {
 	float: left;
 	clear: left;
 	text-align: left;
@@ -175,4 +175,5 @@
     font-size: 12px;
 	text-align: left;
 	white-space: pre-wrap;
+	margin-bottom: 0;
 }

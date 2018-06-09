@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MutualFriendsGraph
 // @namespace    https://oskark.pl/
-// @version      1.7.5
+// @version      1.7.6
 // @updateURL    https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @resource     css mfg.css
