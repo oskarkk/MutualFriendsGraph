@@ -161,6 +161,16 @@
 }
 
 #mfgResults textarea {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    top: 170px;
+	left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#mfgResults .graph {
     display: block;
     position: absolute;
     bottom: 10px;

@@ -7,8 +7,10 @@
 // @resource     css mfg.css
 // @resource     panel panel.html
 // @resource     gui gui.js
+// @resource     visualization visualization.js
 // @run-at       document-end
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.13/cytoscape.min.js
 // @noframes
 // @include      *://*.facebook.com/*
 // @grant        GM_getValue
@@ -17,6 +19,7 @@
 // ==/UserScript==
 
 eval(GM_getResourceText('gui'));
+eval(GM_getResourceText('visualization'));
 
 var fbMutualFriendsURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
 var fbYourFriendsBox = '#pagelet_timeline_medley_friends';
@@ -170,6 +173,23 @@ function showResults() {
 									`Number of graph edges: ${edgesNumber}\n`+
 									`Duration: ${duration} seconds\n`);
 	mfgShow('#mfgResults');
+	cy.resize();
+	var layout = cy.layout({
+		name: 'grid',
+		cols: 4,
+		sort: function( a, b ){
+			if( a.id() < b.id() ){
+				return -1;
+			} else if( a.id() > b.id() ){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	});
+	layout.run();
+	/*cy.reset();
+	cy.fit();*/
 }
 
 function checkUniqueness(currentName,n) {
