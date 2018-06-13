@@ -170,20 +170,47 @@
     box-sizing: border-box;
 }
 
-#mfgResults .graph {
-    display: block;
-    position: absolute;
-    bottom: 10px;
-    top: 170px;
-	left: 0;
-    width: 100%;
-    box-sizing: border-box;
-}
-
 #mfgResults p.stats {
 	float: left;
     font-size: 12px;
 	text-align: left;
 	white-space: pre-wrap;
 	margin-bottom: 0;
+}
+
+/*
+// Graph
+*/
+
+.mfgGraph {
+    display: block;
+    box-sizing: border-box;
+}
+
+.mfgGraph small {
+    position: absolute;
+    bottom: 10px;
+    top: 170px;
+	left: 0;
+    width: 100%;
+}
+
+.mfgGraph fullscreen {
+    position: fixed;
+	top: 10px;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+}
+
+.mfgGraph svg.button {
+	position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    left: 0;
+}
+
+.mfgGraph svg.button.close {
+    display: none;
 }
