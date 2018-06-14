@@ -178,6 +178,8 @@
 	margin-bottom: 0;
 }
 
+
+
 /*
 // Graph
 */
@@ -185,9 +187,6 @@
 .mfgGraph {
     display: block;
     box-sizing: border-box;
-}
-
-.mfgGraph small {
     position: absolute;
     bottom: 10px;
     top: 170px;
@@ -195,7 +194,7 @@
     width: 100%;
 }
 
-.mfgGraph fullscreen {
+.mfgGraph.fullscreen {
     position: fixed;
 	top: 10px;
 	bottom: 10px;

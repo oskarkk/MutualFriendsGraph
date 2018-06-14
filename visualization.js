@@ -178,7 +178,7 @@ var dataArray = [`[{
 }]`];
 
 var cy = window.cy = cytoscape({
-	container: $('#mfgResults .graph'),
+	container: $('.mfgGraph'),
 
 	boxSelectionEnabled: false,
 	autounselectify: true,
