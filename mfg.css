@@ -8,7 +8,7 @@
 	left: 50%;
 	top: 42px;
 	bottom: 0;
-	z-index: 9000;
+	z-index: 500;
 	transition: opacity 0.3s;
 }
 
@@ -88,6 +88,7 @@
 	background: #4267b2;
 	color: white;
 	border-radius: 3px;
+	border: none;
 }
 
 .mfgLinkWrapper {
@@ -228,4 +229,46 @@
 .mfgGraph .controls .close,
 .mfgGraph .controls .layout-stop {
     display: none;
+}
+
+
+#graphDialog {
+	position: fixed;
+    bottom: 40px;
+    left: 40px;
+    padding: 5px;
+    background: white;
+    box-shadow: 0 0 10px 0px #203258;
+	z-index: 1000;
+	width: 220px;
+}
+
+#graphDialog form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#graphDialog form * {
+	display: block;
+    width: 25%;
+    box-sizing: border-box;
+    margin: 2px 0;
+    padding: 1px 4px;
+    font-size: 11px;
+    text-align: center;
+}
+
+#graphDialog form span {
+	text-transform: uppercase;
+    letter-spacing: 1px;
+	width: 75%;
+    text-align: right;
+}
+
+#graphDialog button {
+    display: block;
+	width: 100%;
+	margin-top: 10px;
+	padding: 5px;
 }

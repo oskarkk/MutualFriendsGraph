@@ -118,5 +118,31 @@ $('.mfgGraph .button.center').click(function(){
 
 // graph layout
 $('.mfgGraph .button.layout-start').click(function(){
-	cy.layout(layout.cose).run();
+	cy.layout(layout.current).run();
+});
+
+
+$("#save-layout").on("click", function () {
+	layout.current.nodeRepulsion = Number(document.getElementById("node-repulsion").value);
+	layout.current.nodeOverlap = Number(document.getElementById("node-overlap").value);
+	layout.current.idealEdgeLength = Number(document.getElementById("ideal-edge-length").value);
+	layout.current.edgeElasticity = Number(document.getElementById("edge-elasticity").value);
+	layout.current.nestingFactor = Number(document.getElementById("nesting-factor").value);
+	layout.current.gravity = Number(document.getElementById("gravity").value);
+	layout.current.numIter = Number(document.getElementById("num-iter").value);
+	layout.current.animate = document.getElementById("animate").checked;
+	layout.current.refresh = Number(document.getElementById("refresh").value);
+	layout.current.fit = document.getElementById("fit").checked;
+	layout.current.padding = Number(document.getElementById("padding").value);
+	layout.current.randomize = document.getElementById("randomize").checked;
+	layout.current.debug = document.getElementById("debug").checked;
+	layout.current.initialTemp = Number(document.getElementById("initialTemp").value);
+	layout.current.minTemp = Number(document.getElementById("minTemp").value);
+	$('#graphDialog').css('display', 'none');
+});
+
+$("#default-layout").on("click", function () {
+	layout.current = layout.cose;
+	$('#graphDialog form')[0].reset(); // [0] cuz .reset() isn't jQ function
+	$('#graphDialog').css('display', 'none');
 });

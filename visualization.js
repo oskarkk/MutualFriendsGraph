@@ -95,16 +95,21 @@ var cy = window.cy = cytoscape({
 var layout = {
 	grid: {
 		name: 'grid',
-		cols: 4
+		cols: 20
 	},
 	cose: {
 		name: 'cose',
+		
+		animate: true,
+		animationThreshold: 250,
+		refresh: 20,
+		
+		randomize: true,
+
 		idealEdgeLength: 100,
 		nodeOverlap: 20,
-		refresh: 20,
 		fit: true,
 		padding: 30,
-		randomize: true,
 		componentSpacing: 100,
 		nodeRepulsion: 400000,
 		edgeElasticity: 100,
@@ -114,5 +119,6 @@ var layout = {
 		initialTemp: 200,
 		coolingFactor: 0.95,
 		minTemp: 1.0
-	}
+	},
+	current: this.cose
 };
