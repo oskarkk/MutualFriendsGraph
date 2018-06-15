@@ -187,3 +187,21 @@ var cy = window.cy = cytoscape({
 
 	elements: JSON.parse(dataArray[1])
 });
+
+var testLayout = cy.layout({
+  name: 'grid',
+  cols: 4,
+  sort: function( a, b ){
+    if( a.id() < b.id() ){
+      return -1;
+    } else if( a.id() > b.id() ){
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+});
+
+var spring = cy.layout({
+  name: 'cose'
+});

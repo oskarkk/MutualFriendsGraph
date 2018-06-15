@@ -174,22 +174,7 @@ function showResults() {
 									`Duration: ${duration} seconds\n`);
 	mfgShow('#mfgResults');
 	cy.resize();
-	var layout = cy.layout({
-		name: 'grid',
-		cols: 4,
-		sort: function( a, b ){
-			if( a.id() < b.id() ){
-				return -1;
-			} else if( a.id() > b.id() ){
-				return 1;
-			} else {
-				return 0;
-			}
-		}
-	});
-	layout.run();
-	/*cy.reset();
-	cy.fit();*/
+	testLayout.run();
 }
 
 function checkUniqueness(currentName,n) {

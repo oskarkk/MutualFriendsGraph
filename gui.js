@@ -116,3 +116,13 @@ $('.mfgGraph .button.close').click(function(){
 	$('.mfgGraph').removeClass('fullscreen');
 	$('.mfgGraph .button.enter').css('display', 'block');
 });
+
+// graph center
+$('.mfgGraph .button.center').click(function(){
+	cy.fit()
+});
+
+// graph layout
+$('.mfgGraph .button.layout-start').click(function(){
+	spring.run();
+});
