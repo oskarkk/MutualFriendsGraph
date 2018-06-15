@@ -119,7 +119,7 @@ $('.mfgGraph .button.close').click(function(){
 
 // graph center
 $('.mfgGraph .button.center').click(function(){
-	cy.fit()
+	cy.fit();
 });
 
 // graph layout

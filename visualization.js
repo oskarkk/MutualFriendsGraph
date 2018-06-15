@@ -10,60 +10,10 @@ var eles = cy.add([
 ]);
 */
 
-var dataArray = [`[{
-  "selector": "node",
-  "style": {
-    "height": 40,
-    "width": 40,
-    "background-color": "#333",
-    "label": "data(type)",
-    "text-valign": "center",
-    "text-halign": "left"
-  }
-}, {
-  "selector": "edge",
-  "style": {
-    "width": 3,
-    "opacity": 0.666,
-    "line-color": "#888"
-  }
-}, {
-  "selector": "edge.bezier",
-  "style": {
-    "curve-style": "bezier",
-    "control-point-step-size": 40
-  }
-}, {
-  "selector": "edge.unbundled-bezier",
-  "style": {
-    "curve-style": "unbundled-bezier",
-    "control-point-distances": 120,
-    "control-point-weights": 0.1
-  }
-}, {
-  "selector": "edge.multi-unbundled-bezier",
-  "style": {
-    "curve-style": "unbundled-bezier",
-    "control-point-distances": [40, -40],
-    "control-point-weights": [0.250, 0.75]
-  }
-}, {
-  "selector": "edge.haystack",
-  "style": {
-    "curve-style": "haystack",
-    "haystack-radius": 0.5
-  }
-}, {
-  "selector": "edge.segments",
-  "style": {
-    "curve-style": "segments",
-    "segment-distances": [ 40, -40 ],
-    "segment-weights": [0.250 , 0.75]
-  }
-}]`, `[{
+var dataArray = `[{
   "data": {
     "id": "n01",
-    "type": "bezier"
+    "name": "bezier"
   }
 }, {
   "data": {
@@ -74,26 +24,23 @@ var dataArray = [`[{
     "id": "e01",
     "source": "n01",
     "target": "n02"
-  },
-  "classes": "bezier"
+  }
 }, {
   "data": {
     "id": "e02",
     "source": "n01",
     "target": "n02"
-  },
-  "classes": "bezier"
+  }
 }, {
   "data": {
     "id": "e03",
     "source": "n02",
     "target": "n01"
-  },
-  "classes": "bezier"
+  }
 }, {
   "data": {
     "id": "n03",
-    "type": "unbundled-bezier"
+    "name": "unbundled-bezier"
   }
 }, {
   "data": {
@@ -104,12 +51,11 @@ var dataArray = [`[{
     "id": "e04",
     "source": "n03",
     "target": "n04"
-  },
-  "classes": "unbundled-bezier"
+  }
 }, {
   "data": {
     "id": "n05",
-    "type": "unbundled-bezier(multiple)"
+    "name": "unbundled-bezier(multiple)"
   }
 }, {
   "data": {
@@ -120,12 +66,11 @@ var dataArray = [`[{
     "id": "e05",
     "source": "n05",
     "target": "n06"
-  },
-  "classes": "multi-unbundled-bezier"
+  }
 }, {
   "data": {
     "id": "n07",
-    "type": "haystack"
+    "name": "haystack"
   }
 }, {
   "data": {
@@ -136,33 +81,29 @@ var dataArray = [`[{
     "id": "e06",
     "source": "n08",
     "target": "n07"
-  },
-  "classes": "haystack"
+  }
 }, {
   "data": {
     "id": "e07",
     "source": "n08",
     "target": "n07"
-  },
-  "classes": "haystack"
+  }
 }, {
   "data": {
     "id": "e08",
     "source": "n08",
     "target": "n07"
-  },
-  "classes": "haystack"
+  }
 }, {
   "data": {
     "id": "e09",
     "source": "n08",
     "target": "n07"
-  },
-  "classes": "haystack"
+  }
 }, {
   "data": {
     "id": "n09",
-    "type": "segments"
+    "name": "segments"
   }
 }, {
   "data": {
@@ -173,9 +114,8 @@ var dataArray = [`[{
     "id": "e10",
     "source": "n09",
     "target": "n10"
-  },
-  "classes": "segments"
-}]`];
+  }
+}]`;
 
 var cy = window.cy = cytoscape({
 	container: $('.mfgGraph'),
@@ -183,9 +123,26 @@ var cy = window.cy = cytoscape({
 	boxSelectionEnabled: false,
 	autounselectify: true,
 
-	style: JSON.parse(dataArray[0]),
+	style: [{
+    "selector": "node",
+    "style": {
+      "height": 40,
+      "width": 40,
+      "background-color": "#333",
+      "label": "data(name)",
+      "text-valign": "center",
+      "text-halign": "left"
+    }
+  }, {
+    "selector": "edge",
+    "style": {
+      "width": 3,
+      "opacity": 0.666,
+      "line-color": "#888"
+    }
+  }],
 
-	elements: JSON.parse(dataArray[1])
+	elements: JSON.parse(dataArray)
 });
 
 var testLayout = cy.layout({

@@ -75,7 +75,7 @@ function getYourFriends() {
 	var friendsList = $(fbYourFriendsElements);
 	var friendsCount = friendsList.length;
 	
-	for(var i = 0; i < friendsCount; i++) { // for every friend on the list
+	for(let i = 0; i < friendsCount; i++) { // for every friend on the list
 		GM_setValue(
 			addZeroes(i) + '-id', // friend seq number
 			$(friendsList[i]).find('a.friendButton').attr('data-profileid')
@@ -144,8 +144,8 @@ function getMutualFriends(currentFriend) {
 	var mutualFriendsCount = mutualFriendsList.length;
 	GM_setValue(currentFriend + '-mNum', mutualFriendsCount);
 
-	for(var i = 0; i < mutualFriendsCount; i++) {
-		var currentMutualFriend = $(mutualFriendsList[i]).find('.fsl.fwb.fcb a').text();
+	for(let i = 0; i < mutualFriendsCount; i++) {
+		let currentMutualFriend = $(mutualFriendsList[i]).find('.fsl.fwb.fcb a').text();
 		GM_setValue(currentFriend + '-m-' + addZeroes(i), currentMutualFriend);
 	}
 
@@ -153,22 +153,43 @@ function getMutualFriends(currentFriend) {
 }
 
 function showResults() {
+	var graphElements = [];
 	$('#mfgResults textarea').html('');
 	var edgesNumber = 0;
 	var friendsCount = GM_getValue('_friendsCount');
 	var duration = GM_getValue('_duration');
-	for(var i = 0; i < friendsCount; i++) {
-		var mutualFriendsCount = GM_getValue(addZeroes(i)+'-mNum');
-		var friendName = GM_getValue(addZeroes(i)+'-name');
-		for(var j = 0; j < mutualFriendsCount; j++){
-			var mutualFriendName = GM_getValue(addZeroes(i)+'-m-'+addZeroes(j));
-			if(checkUniqueness(mutualFriendName,i) == 1){
-				$('#mfgResults textarea').append(friendName+
-								'&Tab;'+mutualFriendName+'\n');
-				edgesNumber++;
+
+	for(let i = 0; i < friendsCount; i++) {
+		let i0 = addZeroes(i);
+		graphElements.push({
+			data: {
+				id: 'n'+i0,
+				name: GM_getValue(i0+'-name'),
+				mutualCount: GM_getValue(i0+'-mNum')
+			}
+		});
+	}
+
+	for(let i = 0; i < friendsCount; i++) {
+		let i0 = addZeroes(i);
+		for(let j = 0; j < graphElements[i].data.mutualCount; j++){
+			let j0 = addZeroes(j);
+			var mutualName = GM_getValue(i0+'-m-'+j0);
+			if(checkUniqueness(mutualName,i)){
+				$('#mfgResults textarea')
+					.append(graphElements[i].data.name+'&Tab;'+mutualName+'\n');
+
+				graphElements.push({
+					data: {
+						id: 'e'+addZeroes(edgesNumber++),
+						source: 'n'+i0,
+						target: 'n'+j0,
+					}
+				});
 			}
 		}
 	}
+	cy.add(graphElements);
 	$('#mfgResults p.stats').html(  `Friends count: ${friendsCount}\n`+
 									`Number of graph edges: ${edgesNumber}\n`+
 									`Duration: ${duration} seconds\n`);
@@ -178,7 +199,7 @@ function showResults() {
 }
 
 function checkUniqueness(currentName,n) {
-	for(var i = 0; i<n; i++) {
+	for(let i = 0; i<n; i++) {
 		if( currentName == GM_getValue(addZeroes(i)+'-name') ) {
 			return 0;
 		}
@@ -187,7 +208,7 @@ function checkUniqueness(currentName,n) {
 }
 
 function addZeroes(x) {
-	return x.toString().padStart(4,'0');
+	return x.toString().padStart(5,'0');
 }
 
 function mfgShow(str) {
