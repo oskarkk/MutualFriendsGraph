@@ -160,13 +160,16 @@ function getMutual(currentFriend) {
 }
 
 function showResults() {
+	// nodes and edges of the graph
 	var graphElements = [];
+	// erase output textarea
 	$('#mfgResults textarea').html('');
 	var edgesNumber = 0;
 	var friendsCount = GM_getValue('_friendsCount');
 	var friendsCrawled = GM_getValue('_friendsCrawled');
 	var duration = GM_getValue('_duration');
 
+	// make a node for every friend
 	for(let i = 0; i < friendsCount; i++) {
 		let i0 = addZeroes(i);
 		graphElements.push({
@@ -178,11 +181,13 @@ function showResults() {
 		});
 	}
 
+	// make an edge between every pair of mutual friends
 	for(let i = 0; i < friendsCrawled; i++) {
 		let i0 = addZeroes(i);
 		for(let j = 0; j < graphElements[i].data.mutualCount; j++){
 			let j0 = addZeroes(j);
 			let mutualName = GM_getValue(i0+'-m-'+j0);
+			let mutualNode = graphElements.find(function(obj){return obj.data.name == mutualName;});
 			if(checkUniqueness(mutualName,i)){
 				$('#mfgResults textarea')
 					.append(graphElements[i].data.name+'&Tab;'+mutualName+'\n');
@@ -191,7 +196,7 @@ function showResults() {
 					data: {
 						id: 'e'+addZeroes(edgesNumber++),
 						source: 'n'+i0,
-						target: 'n'+j0
+						target: mutualNode.data.id
 					}
 				});
 			}
@@ -206,6 +211,7 @@ function showResults() {
 	cy.layout(layout.grid).run();
 }
 
+// check if mutual friend of n-th friend is one of the friends already added to the graph  
 function checkUniqueness(currentName,n) {
 	for(let i = 0; i<n; i++) {
 		if( currentName == GM_getValue(addZeroes(i)+'-name') ) {
@@ -223,5 +229,3 @@ function mfgShow(str) {
 	$('#mfgBody > div').css('display', 'none');
 	$(str).css('display', 'block');
 }
-
-var obj = objArray.find(function (obj) { return obj.id === 3; });
