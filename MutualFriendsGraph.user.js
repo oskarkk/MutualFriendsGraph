@@ -21,12 +21,12 @@
 eval(GM_getResourceText('gui'));
 eval(GM_getResourceText('visualization'));
 
-var fbMutualFriendsURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
-var fbYourFriendsBox = '#pagelet_timeline_medley_friends';
-var fbYourFriendsElements = '#pagelet_timeline_medley_friends li._698';
-var fbYourFriendsLoading = '#pagelet_timeline_medley_friends img._359.img';
-var fbMutualFriendsElements = '.fbProfileBrowser .fbProfileBrowserListItem';
-var fbMutualFriendsLoading = '.fbProfileBrowser .uiMorePagerLoader.pam';
+var fbMutualURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
+var fbFriendsBox = '#pagelet_timeline_medley_friends';
+var fbFriendsElements = '#pagelet_timeline_medley_friends li._698';
+var fbFriendsLoading = '#pagelet_timeline_medley_friends img._359.img';
+var fbMutualElements = '.fbProfileBrowser .fbProfileBrowserListItem';
+var fbMutualLoading = '.fbProfileBrowser .uiMorePagerLoader.pam';
 
 // check if script was started on previous page
 if(GM_getValue('_crawlerRunning') == 1) {
@@ -38,7 +38,7 @@ if(GM_getValue('_crawlerRunning') == 1) {
 
 function startCrawler(toTest) {
 	// error when user tries to start the crawler on wrong page
-	if($(fbYourFriendsBox).length == 0){
+	if($(fbFriendsBox).length == 0){
 		alert('Go to your friends list and reload.');
 		return;
 	}
@@ -58,12 +58,12 @@ function startCrawler(toTest) {
 		window.scrollTo(0, 100000);
 		progressBar('bottom',0,1);
 		// check if there is page loading image
-		if($(fbYourFriendsLoading).length==0){
+		if($(fbFriendsLoading).length==0){
 			clearInterval(loop); // break loop
 			progressBar('bottom','Processing...',0);
 			// when the page is fully loaded, save every friend on the page
-			getYourFriends();
-			if(toTest > 0) GM_setValue('_friendsCount',toTest);
+			getFriends();
+			if(toTest > 0) GM_setValue('_friendsCrawled',toTest);
 			GM_setValue('_currentFriend',0);
 			goToFriend(0); // leave current page and go to the 1st friend
 		}
@@ -71,8 +71,8 @@ function startCrawler(toTest) {
 }
 
 // save every friend from logged in user's friends list
-function getYourFriends() {
-	var friendsList = $(fbYourFriendsElements);
+function getFriends() {
+	var friendsList = $(fbFriendsElements);
 	var friendsCount = friendsList.length;
 	
 	for(let i = 0; i < friendsCount; i++) { // for every friend on the list
@@ -86,27 +86,28 @@ function getYourFriends() {
 		);
 	}
 	GM_setValue('_friendsCount',friendsCount);
-	progressBar('top',0,1/(friendsCount+2));
+	GM_setValue('_friendsCrawled',friendsCount);
+	//progressBar('top',0,1/(friendsCount+2));
 	progressBar('bottom','Loading the next page...',1);
 }
 
 // go to the page with mutual friends with nth friend on the list
 function goToFriend(num) {
 	num = addZeroes(num);
-	$(location).attr('href', fbMutualFriendsURL+GM_getValue(num + '-id') );
+	$(location).attr('href', fbMutualURL+GM_getValue(num + '-id') );
 }
 
 // get mutual friends with the next friend
 function crawlFriend() {
 	
 	var currentFriend = GM_getValue('_currentFriend'); // which friend to crawl
-	var friendsCount = GM_getValue('_friendsCount');   // total number of friends
+	var friendsCrawled = GM_getValue('_friendsCrawled');   // total number of friends
 	
 	// show 'current friend / total friends' on the progress bar
 	progressBar('top',
 				'Getting friend '+(currentFriend+1)+
-					'/'+friendsCount+' data ...',
-				(currentFriend+1)/(friendsCount+2));
+					'/'+friendsCrawled+' data ...',
+				(currentFriend+1)/(friendsCrawled+2));
 	
 	mfgShow('#mfgProcessing');
 	
@@ -117,12 +118,12 @@ function crawlFriend() {
 		window.scrollTo(0, 100000);
 		progressBar('bottom','Scrolling...',1);
 		// if it's the end of list
-		if($(fbMutualFriendsLoading).length==0){
+		if($(fbMutualLoading).length==0){
 			clearInterval(loop); // break loop
 			progressBar('bottom','Processing...',0);
-			getMutualFriends(currentFriend); // save all mutual friends
+			getMutual(currentFriend); // save all mutual friends
 			currentFriend++;
-			if( currentFriend < friendsCount ) {
+			if( currentFriend < friendsCrawled ) {
 				// if there are friends to crawl left go to the next friend
 				GM_setValue('_currentFriend',currentFriend);
 				goToFriend(currentFriend);
@@ -138,15 +139,15 @@ function crawlFriend() {
 	}, 300);
 }
 
-function getMutualFriends(currentFriend) {
+function getMutual(currentFriend) {
 	currentFriend = addZeroes(currentFriend);
-	var mutualFriendsList = $(fbMutualFriendsElements);
-	var mutualFriendsCount = mutualFriendsList.length;
-	GM_setValue(currentFriend + '-mNum', mutualFriendsCount);
+	var mutualList = $(fbMutualElements);
+	var mutualCount = mutualList.length;
+	GM_setValue(currentFriend + '-mNum', mutualCount);
 
-	for(let i = 0; i < mutualFriendsCount; i++) {
-		let currentMutualFriend = $(mutualFriendsList[i]).find('.fsl.fwb.fcb a').text();
-		GM_setValue(currentFriend + '-m-' + addZeroes(i), currentMutualFriend);
+	for(let i = 0; i < mutualCount; i++) {
+		let currentMutual = $(mutualList[i]).find('.fsl.fwb.fcb a').text();
+		GM_setValue(currentFriend + '-m-' + addZeroes(i), currentMutual);
 	}
 
 	progressBar('bottom','Loading the next page...',1);
@@ -157,6 +158,7 @@ function showResults() {
 	$('#mfgResults textarea').html('');
 	var edgesNumber = 0;
 	var friendsCount = GM_getValue('_friendsCount');
+	var friendsCrawled = GM_getValue('_friendsCrawled');
 	var duration = GM_getValue('_duration');
 
 	for(let i = 0; i < friendsCount; i++) {
@@ -170,11 +172,11 @@ function showResults() {
 		});
 	}
 
-	for(let i = 0; i < friendsCount; i++) {
+	for(let i = 0; i < friendsCrawled; i++) {
 		let i0 = addZeroes(i);
 		for(let j = 0; j < graphElements[i].data.mutualCount; j++){
 			let j0 = addZeroes(j);
-			var mutualName = GM_getValue(i0+'-m-'+j0);
+			let mutualName = GM_getValue(i0+'-m-'+j0);
 			if(checkUniqueness(mutualName,i)){
 				$('#mfgResults textarea')
 					.append(graphElements[i].data.name+'&Tab;'+mutualName+'\n');
@@ -183,7 +185,7 @@ function showResults() {
 					data: {
 						id: 'e'+addZeroes(edgesNumber++),
 						source: 'n'+i0,
-						target: 'n'+j0,
+						target: 'n'+j0
 					}
 				});
 			}
