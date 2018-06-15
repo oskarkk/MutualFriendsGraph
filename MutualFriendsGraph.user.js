@@ -18,8 +18,14 @@
 // @grant        GM_getResourceText
 // ==/UserScript==
 
-eval(GM_getResourceText('gui'));
+// add GUI css and html
+var cssTxt = GM_getResourceText('css');
+var panelTxt = GM_getResourceText('panel');
+$('head').append('<style>' + cssTxt + '</style>');
+$('body').append(panelTxt);
+
 eval(GM_getResourceText('visualization'));
+eval(GM_getResourceText('gui'));
 
 var fbMutualURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
 var fbFriendsBox = '#pagelet_timeline_medley_friends';
@@ -197,7 +203,7 @@ function showResults() {
 									`Duration: ${duration} seconds\n`);
 	mfgShow('#mfgResults');
 	cy.resize();
-	testLayout.run();
+	cy.layout(layout.grid).run();
 }
 
 function checkUniqueness(currentName,n) {
@@ -217,3 +223,5 @@ function mfgShow(str) {
 	$('#mfgBody > div').css('display', 'none');
 	$(str).css('display', 'block');
 }
+
+var obj = objArray.find(function (obj) { return obj.id === 3; });

@@ -2,12 +2,6 @@
 // General
 //
 
-// add GUI css and html
-var cssTxt = GM_getResourceText('css');
-var panelTxt = GM_getResourceText('panel');
-$('head').append('<style>' + cssTxt + '</style>');
-$('body').append(panelTxt);
-
 // make GUI almost transparent when out of focus
 $('body > ._li').mouseenter(function(){
 	$('#mfgPanel').css('opacity', '0.3');
@@ -124,5 +118,5 @@ $('.mfgGraph .button.center').click(function(){
 
 // graph layout
 $('.mfgGraph .button.layout-start').click(function(){
-	spring.run();
+	cy.layout(layout.cose).run();
 });
