@@ -2,6 +2,12 @@
 // General
 */
 
+button {
+	cursor: pointer;
+	border: none;
+	background: none;
+}
+
 #mfgWrapper {
 	position: fixed;
 	right: 0;
@@ -88,7 +94,6 @@
 	background: #4267b2;
 	color: white;
 	border-radius: 3px;
-	border: none;
 }
 
 .mfgLinkWrapper {
@@ -205,29 +210,39 @@
     box-shadow: 0 0 20px 5px #203258;
 }
 
+#cy {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 .mfgGraph .controls {
     top: 5px;
 	left: 5px;
 	z-index: 10;
 	position: absolute;
 	display: flex;
+    background: rgba(255,255,255,0.8);
+    border-radius: 5px;
+    align-items: center;
 }
 
-.mfgGraph svg.button {
+.mfgGraph svg {
     width: 50px;
     height: 50px;
-	cursor: pointer;
-}
-
-.mfgGraph div.button {
-    font-size: 20px;
-    line-height: 40px;
+    margin-right: 10px;
     cursor: pointer;
-    margin: 0 7px;
 }
 
-.mfgGraph .controls .close,
-.mfgGraph .controls .layout-stop {
+.mfgGraph button {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.mfgGraph .controls .close {
     display: none;
 }
 
@@ -241,6 +256,7 @@
     box-shadow: 0 0 10px 0px #203258;
 	z-index: 1000;
 	width: 220px;
+    display: none;
 }
 
 #graphDialog form {
@@ -269,6 +285,6 @@
 #graphDialog button {
     display: block;
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 7px;
 	padding: 5px;
 }

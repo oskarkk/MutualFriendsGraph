@@ -98,27 +98,43 @@ $('.mfgLink.copy').click(function(){
 });
 
 // graph fullscreen enter
-$('.mfgGraph .button.enter').click(function(){
-	$('.mfgGraph .button.enter').css('display', 'none');
+$('.mfgGraph svg.enter').click(function(){
+	$('.mfgGraph svg.enter').css('display', 'none');
 	$('.mfgGraph').addClass('fullscreen');
-	$('.mfgGraph .button.close').css('display', 'block');
+	$('.mfgGraph svg.close').css('display', 'block');
+	cy.resize();
 });
 
 // graph fullscreen close
-$('.mfgGraph .button.close').click(function(){
-	$('.mfgGraph .button.close').css('display', 'none');
+$('.mfgGraph svg.close').click(function(){
+	$('.mfgGraph svg.close').css('display', 'none');
 	$('.mfgGraph').removeClass('fullscreen');
-	$('.mfgGraph .button.enter').css('display', 'block');
+	$('.mfgGraph svg.enter').css('display', 'block');
+	cy.resize();
 });
 
 // graph center
-$('.mfgGraph .button.center').click(function(){
+$('.mfgGraph button.center').click(function(){
 	cy.fit();
 });
 
 // graph layout
-$('.mfgGraph .button.layout-start').click(function(){
-	cy.layout(layout.current).run();
+$('.mfgGraph button.layout-start').one('click', runLayout);
+
+function runLayout() {
+	$('.mfgGraph button.layout-start').css('color', 'lightgrey');
+	setTimeout(function(){
+		layout.current.stop = function(){
+			$('.mfgGraph button.layout-start').css('color', 'black');
+			$('.mfgGraph button.layout-start').one('click', runLayout);
+		}
+		cy.layout(layout.current).run();
+	},100);
+}
+
+// graph settings
+$('.mfgGraph button.settings').click(function(){
+	$('#graphDialog').css('display', 'block');
 });
 
 
@@ -142,7 +158,7 @@ $("#save-layout").on("click", function () {
 });
 
 $("#default-layout").on("click", function () {
-	layout.current = layout.cose;
+	layout.current = Object.assign({}, layout.cose);
 	$('#graphDialog form')[0].reset(); // [0] cuz .reset() isn't jQ function
 	$('#graphDialog').css('display', 'none');
 });

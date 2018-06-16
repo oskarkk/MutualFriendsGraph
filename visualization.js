@@ -1,74 +1,9 @@
-var testNodes = [
-	{
-	data: {
-		id: "n01",
-		name: "bezier"
-	}
-	}, {
-		"data": {
-			"id": "n02"
-		}
-	}, {
-		"data": {
-			"id": "e01",
-			"source": "n01",
-			"target": "n02"
-		}
-	}, {
-		"data": {
-			"id": "e02",
-			"source": "n01",
-			"target": "n02"
-		}
-	}, {
-		"data": {
-			"id": "e03",
-			"source": "n02",
-			"target": "n01"
-		}
-	}, {
-		"data": {
-			"id": "n03",
-			"name": "unbundled-bezier"
-		}
-	}, {
-		"data": {
-			"id": "n04"
-		}
-	}, {
-		"data": {
-			"id": "e04",
-			"source": "n03",
-			"target": "n04"
-		}
-	}, {
-		"data": {
-			"id": "n05",
-			"name": "unbundled-bezier(multiple)"
-		}
-	}, {
-		"data": {
-			"id": "n06"
-		}
-	}, {
-		"data": {
-			"id": "e05",
-			"source": "n05",
-			"target": "n06"
-		}
-	}, {
-		"data": {
-			"id": "n07",
-			"name": "haystack"
-		}
-	}
-];
-
 var cy = window.cy = cytoscape({
-	container: $('.mfgGraph'),
+	container: $('#cy'),
 
 	boxSelectionEnabled: false,
 	autounselectify: true,
+	wheelSensitivity: 0.15,
 
 	style: [{
 		"selector": "node",
@@ -78,7 +13,7 @@ var cy = window.cy = cytoscape({
 			"background-color": "#333",
 			"label": "data(name)",
 			"text-valign": "center",
-			"text-halign": "left"
+			"text-halign": "center"
 		}
 	}, {
 		"selector": "edge",
@@ -89,7 +24,7 @@ var cy = window.cy = cytoscape({
 		}
 	}],
 
-	elements: testNodes
+	elements: {}
 });
 
 var layout = {
@@ -120,5 +55,7 @@ var layout = {
 		coolingFactor: 0.95,
 		minTemp: 1.0
 	},
-	current: this.cose
+	current: {}
 };
+
+layout.current = Object.assign({}, layout.cose);
