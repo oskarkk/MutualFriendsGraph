@@ -1,4 +1,4 @@
-<div id="mfgWrapper">
+<div id="mfgWrapper" class="mfg">
 <div id="mfgPanel">
 	<div id="mfgHeader">
 		Mutual Friends Graph
@@ -37,11 +37,11 @@
 			</div>
 		</div>
 		<div id="mfgResults">
-			<p>
+			<p class="message">
 				Done.
 			</p>
 			<div class="mfgLink copy">
-				<div class="blue">⎘</div>
+				<div class="blue">&#9112;</div>
 				copy to clipboard
 			</div>
 			<p class="stats"></p>
@@ -54,15 +54,18 @@
 			<div class="mfgGraph small">
 				<div id="cy"></div>
 				<div class="controls">
-					<svg xmlns="http://www.w3.org/2000/svg" class="enter" viewBox="0 0 18 18">
-						<path d="M4.5 11H3v4h4v-1.5H4.5V11zM3 7h1.5V4.5H7V3H3v4zm10.5 6.5H11V15h4v-4h-1.5v2.5zM11 3v1.5h2.5V7H15V3h-4z"/>
+					<svg class="enter" version="1.1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+						<path d="m1.5 8h-1.5v4h4v-1.5h-2.5zm-1.5-4h1.5v-2.5h2.5v-1.5h-4zm10.5 6.5h-2.5v1.5h4v-4h-1.5zm-2.5-10.5v1.5h2.5v2.5h1.5v-4z"/>
 					</svg>
-					<svg xmlns="http://www.w3.org/2000/svg" class="close" viewBox="0 0 18 18">
-						<path d="M3 12.5h2.5V15H7v-4H3v1.5zm2.5-7H3V7h4V3H5.5v2.5zM11 15h1.5v-2.5H15V11h-4v4zm1.5-9.5V3H11v4h4V5.5h-2.5z"/>
+					<svg class="close" version="1.1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+						<path d="m0 9.5h2.5v2.5h1.5v-4h-4zm2.5-7h-2.5v1.5h4v-4h-1.5zm5.5 9.5h1.5v-2.5h2.5v-1.5h-4zm1.5-9.5v-2.5h-1.5v4h4v-1.5z"/>
 					</svg>
 					<button class="center">center</button>
 					<button class="layout-start">start layout</button>
 					<button class="settings">settings</button>
+					<button class="names">randomize names</button>
+					<button class="jpg">JPG</button>
+					<button class="png">PNG</button>
 				</div>
 			</div>
 		</div>
@@ -81,7 +84,7 @@
 </div>
 
 
-<div id="graphDialog">
+<div id="graphDialog" class="mfg">
 	<form>
 		<span class="add-on layout-text"> Node Repulsion </span>
 		<input id="node-repulsion" type="text" class="input-small layout-text" value="400000">

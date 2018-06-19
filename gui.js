@@ -83,7 +83,7 @@ function progressBar(position,string,fraction) {
 
 
 //
-// Results
+// Text results
 //
 
 // select all text when clicking on the textarea
@@ -97,39 +97,54 @@ $('.mfgLink.copy').click(function(){
 	document.execCommand('copy');
 });
 
+
+//
+// Graph
+//
+
 // graph fullscreen enter
 $('.mfgGraph svg.enter').click(function(){
 	$('.mfgGraph svg.enter').css('display', 'none');
 	$('.mfgGraph').addClass('fullscreen');
 	$('.mfgGraph svg.close').css('display', 'block');
+	hideEverythingElse();
 	cy.resize();
 });
 
 // graph fullscreen close
 $('.mfgGraph svg.close').click(function(){
+	hideEverythingElse();
 	$('.mfgGraph svg.close').css('display', 'none');
 	$('.mfgGraph').removeClass('fullscreen');
 	$('.mfgGraph svg.enter').css('display', 'block');
 	cy.resize();
 });
 
+function hideEverythingElse() {
+	var ele = $('head style#mfgHide');
+	if(ele.length) ele.remove();
+	else $('head').append('<style id="mfgHide">body > *:not(.mfg) {display: none !important;}</style>')
+}
+
 // graph center
 $('.mfgGraph button.center').click(function(){
-	cy.fit();
+	cy.fit(15);
 });
 
-// graph layout
+// graph layout, one time event listener
 $('.mfgGraph button.layout-start').one('click', runLayout);
 
 function runLayout() {
 	$('.mfgGraph button.layout-start').css('color', 'lightgrey');
 	setTimeout(function(){
+		// run when layout stops running:
 		layout.current.stop = function(){
 			$('.mfgGraph button.layout-start').css('color', 'black');
+			// add one-time event listener again
 			$('.mfgGraph button.layout-start').one('click', runLayout);
 		}
 		cy.layout(layout.current).run();
-	},100);
+	},100); // timeout to allow greying out to appear
 }
 
 // graph settings
