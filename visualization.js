@@ -1,33 +1,17 @@
-var cy = window.cy = cytoscape({
-	container: $('#cy'),
+function startGraph(cont) {
+	cy = window.cy = cytoscape({
+		container: $(cont),
+	
+		boxSelectionEnabled: false,
+		autounselectify: true,
+		wheelSensitivity: 0.15,
+	
+		style: null,
+		elements: null
+	});
+}
 
-	boxSelectionEnabled: false,
-	autounselectify: true,
-	wheelSensitivity: 0.15,
-
-	style: [{
-		"selector": "node",
-		"style": {
-			"height": 40,
-			"width": 40,
-			"background-color": "#333",
-			"label": "data(name)",
-			"text-valign": "center",
-			"text-halign": "center"
-		}
-	}, {
-		"selector": "edge",
-		"style": {
-			"width": 3,
-			"opacity": 0.666,
-			"line-color": "#888"
-		}
-	}],
-
-	elements: {}
-});
-
-var layout = {
+var graphLayout = {
 	grid: {
 		name: 'grid',
 		cols: 20
@@ -58,4 +42,24 @@ var layout = {
 	current: {}
 };
 
-layout.current = Object.assign({}, layout.cose);
+var graphStyle = [{
+	selector: "node",
+	style: {
+		"height": 40,
+		"width": 40,
+		"background-color": "#333",
+		"label": "data(name)",
+		"text-valign": "center",
+		"text-halign": "center",
+		"text-wrap": "none"
+	}
+}, {
+	selector: "edge",
+	style: {
+		"width": 3,
+		"opacity": 0.666,
+		"line-color": "#888"
+	}
+}];
+
+graphLayout.current = Object.assign({}, graphLayout.cose);

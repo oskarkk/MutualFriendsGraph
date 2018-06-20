@@ -6,12 +6,11 @@
 // @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @resource     css mfg.css
 // @resource     panel panel.html
-// @resource     data data.js
-// @resource     visualization visualization.js
 // @run-at       document-end
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.13/cytoscape.min.js
 // @require      gui.js
+// @require      visualization.js
 // @noframes
 // @include      *://*.facebook.com/*
 // @grant        GM_getValue
@@ -29,9 +28,8 @@ var panelTxt = GM_getResourceText('panel');
 $('head').append('<style>' + cssTxt + '</style>');
 $('body').append(panelTxt);
 
-eval(GM_getResourceText('data'));
-eval(GM_getResourceText('visualization'));
 mfgListeners();
+var cy = window.cy;
 
 var fbMutualURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
 var fbFriendsBox = '#pagelet_timeline_medley_friends';
@@ -58,9 +56,7 @@ function startCrawler(toTest) {
 		alert('Go to your friends list and reload.');
 		return;
 	}
-	// hide menu and show progress window
-	$('#mfgStart, #mfgTest').css('display', 'none');
-	$('#mfgProcessing').css('display', 'block');
+	mfgShow('#mfgProcessing');
 	// save the information that the crawler was started
 	GM_setValue('_crawlerRunning',1);
 	
@@ -137,8 +133,7 @@ function crawlFriend() {
 		if($(fbMutualLoading).length==0){
 			clearInterval(loop); // break loop
 			progressBar('bottom','Processing...',0);
-			getMutual(currentFriend); // save all mutual friends
-			currentFriend++;
+			getMutual(currentFriend++); // save all mutual friends
 			if( currentFriend < friendsCrawled ) {
 				// if there are friends to crawl left go to the next friend
 				GM_setValue('_currentFriend',currentFriend);
@@ -169,18 +164,38 @@ function getMutual(currentFriend) {
 	progressBar('bottom','Loading the next page...',1);
 }
 
+//
+// Results
+//
+
 function showResults() {
-	// nodes and edges of the graph
-	var graphElements = [];
 	// erase output textarea
 	$('#mfgResults textarea').html('');
-	var edgesNumber = 0;
-	var friendsCount = GM_getValue('_friendsCount');
-	var friendsCrawled = GM_getValue('_friendsCrawled');
-	var duration = GM_getValue('_duration');
+	var stats = {
+		fCount: GM_getValue('_friendsCount'),
+		fCrawled: GM_getValue('_friendsCrawled'),
+		duration: GM_getValue('_duration'),
+		edgesNumber: 0
+	}
+
+
+	$('#mfgResults p.stats').html(  `Friends count: <span></span>\n`+
+									`Number of graph edges: <span></span>\n`+
+									`Duration: <span></span> seconds\n`);
+	mfgShow('#mfgResults');
+	graphInit(stats);
+	$('#mfgResults p.stats span')[0].html(stats.fCount);
+	$('#mfgResults p.stats span')[1].html(stats.edgesCount);
+	$('#mfgResults p.stats span')[2].html(stats.duration);
+}
+
+function graphInit(stats) {
+	cy = startGraph('#cy');
+	// nodes and edges of the graph
+	var graphElements = [];
 
 	// make a node for every friend
-	for(let i = 0; i < friendsCount; i++) {
+	for(let i = 0; i < stats.fCount; i++) {
 		let i0 = addZeroes(i);
 		graphElements.push({
 			data: {
@@ -192,7 +207,7 @@ function showResults() {
 	}
 
 	// make an edge between every pair of mutual friends
-	for(let i = 0; i < friendsCrawled; i++) {
+	for(let i = 0; i < stats.fCrawled; i++) {
 		let i0 = addZeroes(i);
 		for(let j = 0; j < graphElements[i].data.mutualCount; j++){
 			let j0 = addZeroes(j);
@@ -204,7 +219,7 @@ function showResults() {
 
 				graphElements.push({
 					data: {
-						id: 'e'+addZeroes(edgesNumber++),
+						id: 'e'+addZeroes(stats.edgesCount++),
 						source: 'n'+i0,
 						target: mutualNode.data.id
 					}
@@ -212,13 +227,10 @@ function showResults() {
 			}
 		}
 	}
-	cy.add(graphElements);
-	$('#mfgResults p.stats').html(  `Friends count: ${friendsCount}\n`+
-									`Number of graph edges: ${edgesNumber}\n`+
-									`Duration: ${duration} seconds\n`);
-	mfgShow('#mfgResults');
 	cy.resize();
-	cy.layout(layout.grid).run();
+	cy.add(graphElements);
+	cy.style(graphStyle);
+	cy.layout(graphLayout.grid).run();
 }
 
 // check if mutual friend of n-th friend is one of the friends already added to the graph  

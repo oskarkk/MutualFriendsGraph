@@ -103,7 +103,7 @@ function runLayout() {
 			btn.css('color', 'black');
 			btn.one('click', runLayout); // add one-time event listener again
 		}
-		cy.layout(layout.current).run();
+		cy.layout(graphLayout.current).run();
 	},100); // timeout to allow greying out to appear
 }
 
