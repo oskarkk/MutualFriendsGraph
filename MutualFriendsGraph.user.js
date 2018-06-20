@@ -6,11 +6,12 @@
 // @downloadURL  https://github.com/oskarkk/MutualFriendsGraph/raw/master/MutualFriendsGraph.user.js
 // @resource     css mfg.css
 // @resource     panel panel.html
-// @resource     gui gui.js
+// @resource     data data.js
 // @resource     visualization visualization.js
 // @run-at       document-end
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.13/cytoscape.min.js
+// @require      gui.js
 // @noframes
 // @include      *://*.facebook.com/*
 // @grant        GM_getValue
@@ -18,14 +19,19 @@
 // @grant        GM_getResourceText
 // ==/UserScript==
 
+//
+// Init
+//
+
 // add GUI css and html
 var cssTxt = GM_getResourceText('css');
 var panelTxt = GM_getResourceText('panel');
 $('head').append('<style>' + cssTxt + '</style>');
 $('body').append(panelTxt);
 
+eval(GM_getResourceText('data'));
 eval(GM_getResourceText('visualization'));
-eval(GM_getResourceText('gui'));
+mfgListeners();
 
 var fbMutualURL = 'https://www.facebook.com/browse/mutual_friends/?uid=';
 var fbFriendsBox = '#pagelet_timeline_medley_friends';
@@ -41,6 +47,10 @@ if(GM_getValue('_crawlerRunning') == 1) {
 } else {
 	mfgShow('#mfgStart');
 }
+
+//
+// Crawler
+//
 
 function startCrawler(toTest) {
 	// error when user tries to start the crawler on wrong page
@@ -223,9 +233,4 @@ function checkUniqueness(currentName,n) {
 
 function addZeroes(x) {
 	return x.toString().padStart(5,'0');
-}
-
-function mfgShow(str) {
-	$('#mfgBody > div').css('display', 'none');
-	$(str).css('display', 'block');
 }
