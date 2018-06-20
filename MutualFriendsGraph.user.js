@@ -175,7 +175,7 @@ function showResults() {
 		fCount: GM_getValue('_friendsCount'),
 		fCrawled: GM_getValue('_friendsCrawled'),
 		duration: GM_getValue('_duration'),
-		edgesNumber: 0
+		edgesCount: 0
 	}
 
 
@@ -183,10 +183,12 @@ function showResults() {
 									`Number of graph edges: <span></span>\n`+
 									`Duration: <span></span> seconds\n`);
 	mfgShow('#mfgResults');
-	graphInit(stats);
-	$('#mfgResults p.stats span')[0].html(stats.fCount);
-	$('#mfgResults p.stats span')[1].html(stats.edgesCount);
-	$('#mfgResults p.stats span')[2].html(stats.duration);
+	setTimeout( ()=> { // time for browser to show results window
+		graphInit(stats);
+		$('#mfgResults p.stats span').eq(0).html(stats.fCount);
+		$('#mfgResults p.stats span').eq(1).html(stats.edgesCount);
+		$('#mfgResults p.stats span').eq(2).html(stats.duration);
+	}, 100);
 }
 
 function graphInit(stats) {
@@ -201,7 +203,7 @@ function graphInit(stats) {
 			data: {
 				id: 'n'+i0,
 				name: GM_getValue(i0+'-name'),
-				mutualCount: GM_getValue(i0+'-mNum')
+				mCount: GM_getValue(i0+'-mNum')
 			}
 		});
 	}
@@ -209,19 +211,19 @@ function graphInit(stats) {
 	// make an edge between every pair of mutual friends
 	for(let i = 0; i < stats.fCrawled; i++) {
 		let i0 = addZeroes(i);
-		for(let j = 0; j < graphElements[i].data.mutualCount; j++){
+		for(let j = 0; j < graphElements[i].data.mCount; j++){
 			let j0 = addZeroes(j);
-			let mutualName = GM_getValue(i0+'-m-'+j0);
-			let mutualNode = graphElements.find(function(obj){return obj.data.name == mutualName;});
-			if(checkUniqueness(mutualName,i)){
+			let mName = GM_getValue(i0+'-m-'+j0);
+			let mNode = graphElements.find(function(obj){return obj.data.name == mName;});
+			if(checkUniqueness(mName,i)){
 				$('#mfgResults textarea')
-					.append(graphElements[i].data.name+'&Tab;'+mutualName+'\n');
+					.append(graphElements[i].data.name+'&Tab;'+mName+'\n');
 
 				graphElements.push({
 					data: {
 						id: 'e'+addZeroes(stats.edgesCount++),
 						source: 'n'+i0,
-						target: mutualNode.data.id
+						target: mNode.data.id
 					}
 				});
 			}

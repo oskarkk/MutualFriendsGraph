@@ -1,5 +1,5 @@
 function startGraph(cont) {
-	cy = window.cy = cytoscape({
+	return cytoscape({
 		container: $(cont),
 	
 		boxSelectionEnabled: false,

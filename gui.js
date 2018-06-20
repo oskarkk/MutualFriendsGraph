@@ -70,26 +70,26 @@ function mfgListeners() {
 	$('.mfgGraph button.layout-start').one('click', runLayout);
 
 	$('#save-layout').click( ()=> {
-		layout.current.nodeRepulsion = Number($('#node-repulsion').val());
-		layout.current.nodeOverlap = Number($('#node-overlap').val());
-		layout.current.idealEdgeLength = Number($('#ideal-edge-length').val());
-		layout.current.edgeElasticity = Number($('#edge-elasticity').val());
-		layout.current.nestingFactor = Number($('#nesting-factor').val());
-		layout.current.gravity = Number($('#gravity').val());
-		layout.current.numIter = Number($('#num-iter').val());
-		layout.current.animate = $('#animate').prop('checked');
-		layout.current.refresh = Number($('#refresh').val());
-		layout.current.fit = $('#fit').prop('checked');
-		layout.current.padding = Number($('#padding').val());
-		layout.current.randomize = $('#randomize').prop('checked');
-		layout.current.debug = $('#debug').prop('checked');
-		layout.current.initialTemp = Number($('#initialTemp').val());
-		layout.current.minTemp = Number($('#minTemp').val());
+		graphLayout.current.nodeRepulsion = Number($('#node-repulsion').val());
+		graphLayout.current.nodeOverlap = Number($('#node-overlap').val());
+		graphLayout.current.idealEdgeLength = Number($('#ideal-edge-length').val());
+		graphLayout.current.edgeElasticity = Number($('#edge-elasticity').val());
+		graphLayout.current.nestingFactor = Number($('#nesting-factor').val());
+		graphLayout.current.gravity = Number($('#gravity').val());
+		graphLayout.current.numIter = Number($('#num-iter').val());
+		graphLayout.current.animate = $('#animate').prop('checked');
+		graphLayout.current.refresh = Number($('#refresh').val());
+		graphLayout.current.fit = $('#fit').prop('checked');
+		graphLayout.current.padding = Number($('#padding').val());
+		graphLayout.current.randomize = $('#randomize').prop('checked');
+		graphLayout.current.debug = $('#debug').prop('checked');
+		graphLayout.current.initialTemp = Number($('#initialTemp').val());
+		graphLayout.current.minTemp = Number($('#minTemp').val());
 		$('#graphDialog').hide();
 	});
 
-	$("#default-layout").on("click", ()=> {
-		layout.current = Object.assign({}, layout.cose);
+	$("#default-layout").click( ()=> {
+		graphLayout.current = Object.assign({}, graphLayout.cose);
 		$('#graphDialog form')[0].reset(); // [0] cuz .reset() isn't jQ function
 		$('#graphDialog').hide();
 	});
@@ -99,7 +99,7 @@ function runLayout() {
 	let btn = $('.mfgGraph button.layout-start')
 	btn.css('color', 'lightgrey');
 	setTimeout( ()=> {
-		layout.current.stop = ()=> { // run when layout stops running
+		graphLayout.current.stop = ()=> { // run when layout stops running
 			btn.css('color', 'black');
 			btn.one('click', runLayout); // add one-time event listener again
 		}
