@@ -14,7 +14,8 @@ function startGraph(cont) {
 var graphLayout = {
 	grid: {
 		name: 'grid',
-		cols: 20
+		cols: 20,
+		spacingFactor: 1.5
 	},
 	cose: {
 		name: 'cose',
@@ -51,7 +52,8 @@ var graphStyle = [{
 		"label": "data(name)",
 		"text-valign": "center",
 		"text-halign": "center",
-		"text-wrap": "none"
+		"text-wrap": "none",
+		"min-zoomed-font-size": "5px"
 	}
 }, {
 	selector: "edge",
